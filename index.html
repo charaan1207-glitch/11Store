@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>11Store - Football Merchandise</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}
+
+body{
+  background:
+    linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.8)),
+    url('https://images.unsplash.com/photo-1517927033932-b3d18e61fb3a');
+  background-size:cover;
+  background-position:center;
+  background-attachment:fixed;
+  color:#fff;
+}
+
+/* Stadium Glow Effect */
+body::before{
+  content:"";
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:200px;
+  background:radial-gradient(circle, rgba(255,255,255,0.3), transparent);
+  z-index:-1;
+}
+
+header{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:20px 40px;background:rgba(0,0,0,0.85);
+  position:sticky;top:0;
+}
+
+.logo{font-size:26px;font-weight:700;color:#00ff88}
+
+nav a{margin:0 15px;color:#fff;text-decoration:none}
+nav a:hover{color:#00ff88}
+
+.hero{
+  height:90vh;
+  display:flex;flex-direction:column;
+  justify-content:center;align-items:center;
+  text-align:center;
+  backdrop-filter: blur(4px);
+}
+
+.hero h1{font-size:60px;color:#00ff88}
+.hero p{font-size:20px}
+
+.section{padding:60px 40px;text-align:center}
+.section h2{color:#00ff88;margin-bottom:20px}
+
+.products{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:25px;
+}
+
+.card{
+  background:rgba(0,0,0,0.7);
+  backdrop-filter:blur(8px);
+  border-radius:15px;
+  padding:20px;
+  transition:0.3s;
+}
+
+.card:hover{transform:scale(1.05)}
+
+/* Smart background themes */
+.card.messi{background:linear-gradient(rgba(0,0,50,0.8), rgba(0,0,80,0.9));}
+.card.ucl{background:linear-gradient(rgba(80,0,0,0.8), rgba(120,0,0,0.9));}
+
+button{
+  background:#00ff88;
+  border:none;
+  padding:10px;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+.testimonials, .reviews{
+  display:flex;
+  gap:20px;
+  justify-content:center;
+  flex-wrap:wrap;
+}
+
+.review-card{
+  background:#111;
+  padding:20px;
+  border-radius:10px;
+  width:250px;
+}
+
+.review-card img{
+  width:50px;
+  height:50px;
+  border-radius:50%;
+}
+
+footer{
+  background:#000;
+  padding:20px;
+  text-align:center;
+}
+</style>
+</head>
+<body>
+
+<header>
+<div class="logo">⚽ 11Store</div>
+<nav>
+<a href="#home">Home</a>
+<a href="#about">About</a>
+<a href="#products">Products</a>
+<a href="#contact">Contact</a>
+</nav>
+</header>
+
+<section class="hero" id="home">
+<h1>From The Youth !! For The Youth !!</h1>
+<p>Football Stories Woven Into Fashion</p>
+</section>
+
+<section class="section" id="products">
+<h2>Products</h2>
+<div class="products">
+
+<div class="card messi">
+<h3>"10 Infinity" T-Shirt</h3>
+<p>Messi Inspired</p>
+<p>₹900</p>
+<button>Add to Cart</button>
+</div>
+
+<div class="card ucl">
+<h3>"93:48" Hoodie</h3>
+<p>UCL Iconic Moment</p>
+<p>₹1000</p>
+<button>Add to Cart</button>
+</div>
+
+</div>
+</section>
+
+<section class="section testimonials">
+<h2>Testimonials</h2>
+<div class="review-card">
+<img src="https://randomuser.me/api/portraits/men/32.jpg">
+<p><b>Rahul K</b></p>
+<p>"Crazy designs bro, real football vibes"</p>
+</div>
+<div class="review-card">
+<img src="https://randomuser.me/api/portraits/men/45.jpg">
+<p><b>Arjun M</b></p>
+<p>"Feels like wearing football history"</p>
+</div>
+</section>
+
+<section class="section reviews">
+<h2>Reviews</h2>
+<div class="review-card">
+<img src="https://randomuser.me/api/portraits/women/22.jpg">
+<p><b>Sneha R</b></p>
+<p>⭐⭐⭐⭐⭐ Loved the quality</p>
+</div>
+<div class="review-card">
+<img src="https://randomuser.me/api/portraits/men/60.jpg">
+<p><b>Vikram S</b></p>
+<p>⭐⭐⭐⭐ Unique designs</p>
+</div>
+</section>
+
+<section class="section" id="contact">
+<h2>Contact</h2>
+<p>Founder: Arfat</p>
+<p>Team: Antony, Charaan</p>
+<p>Email: 11store@gmail.com</p>
+<p>Instagram: @omarftbll</p>
+</section>
+
+<footer>
+<p>© 2026 11Store</p>
+</footer>
+
+
+<script>
+let cart=[];
+function addToCart(name,price){
+  cart.push({name,price});
+  alert(name+" added to cart");
+}
+
+function checkout(){
+  let total=cart.reduce((sum,item)=>sum+item.price,0);
+  alert("Total Amount: ₹"+total+"
+Proceeding to payment...");
+}
+</script>
+
+</body>
+</html>
