@@ -6,38 +6,11 @@ const cors = require("cors");
 
 const app = express();
 
-/* 🔥 STRONG CORS FIX (FINAL) */
-const allowedOrigins = [
-  "http://localhost:3000",
-  "http://localhost:3001",
-  "http://localhost:3003",
-  "https://elevenstore-frontend.onrender.com" // (your deployed frontend — update if needed)
-];
-
+/* 🔥 SIMPLE + STRONG CORS (NO CONFLICTS) */
 app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(null, true); // allow all (safe fallback for now)
-    }
-  },
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"],
+  origin: "*",   // allow all for now
+  methods: ["GET", "POST", "PUT", "DELETE"],
 }));
-
-/* 🔥 IMPORTANT: Handle preflight manually */
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
-  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
-
-  if (req.method === "OPTIONS") {
-    return res.sendStatus(200);
-  }
-
-  next();
-});
 
 /* 🔥 BODY PARSER */
 app.use(express.json());
@@ -71,9 +44,9 @@ app.use((err, req, res, next) => {
   res.status(500).json({ msg: "Server Error" });
 });
 
-/* 🔥 START SERVER */
-const PORT = process.env.PORT || 5000;
+/* 🔥 START SERVER (IMPORTANT FIX) */
+const PORT = process.env.PORT || 10000;
 
-app.listen(PORT, () => {
+app.listen(PORT, "0.0.0.0", () => {
   console.log(`🚀 Eleven Store Backend Running on port ${PORT}`);
 });
