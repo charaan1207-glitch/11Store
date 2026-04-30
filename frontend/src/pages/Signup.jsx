@@ -9,7 +9,7 @@ function Signup() {
     const [password, setPassword] = useState("");
 
     const handleSignup = async () => {
-        const res = await fetch("http://localhost:5000/api/auth/signup", {
+        const res = await fetch("https://eleven-backend-d53u.onrender.com/api/auth/signup", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

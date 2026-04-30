@@ -5,7 +5,7 @@ function Admin() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch("http://localhost:5000/api/orders")
+        fetch("http://https://eleven-backend-d53u.onrender.com/api/orders")
             .then((res) => res.json())
             .then((data) => {
                 setOrders(data);
