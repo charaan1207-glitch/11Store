@@ -1,5 +1,4 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import ProductCard from "../components/ProductCard";
 
 import tshirt1 from "../assets/tshirt1.jpg";
@@ -28,12 +27,12 @@ const products = [
 ];
 
 const Home = () => {
-  const navigate = useNavigate();
 
+  // ✅ GLOBAL LOGOUT FIX
   const handleLogout = () => {
     localStorage.removeItem("isLoggedIn");
     localStorage.removeItem("user");
-    navigate("/login");
+    window.location.href = "/signup";
   };
 
   return (

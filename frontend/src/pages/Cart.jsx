@@ -7,7 +7,7 @@ export default function Cart() {
   const { cart, clearCart } = useCart();
   const navigate = useNavigate();
 
-  // 🔐 Protect page (FIXED → signup instead of login)
+  // 🔐 Protect page
   useEffect(() => {
     const isLoggedIn = localStorage.getItem("isLoggedIn");
     if (!isLoggedIn) navigate("/signup");
@@ -19,8 +19,13 @@ export default function Cart() {
     0
   );
 
-  // 📲 WhatsApp Checkout (MOBILE + DESKTOP FIX)
+  // 📲 WhatsApp Checkout (BEST VERSION)
   const checkout = () => {
+    if (cart.length === 0) {
+      alert("Cart is empty ❌");
+      return;
+    }
+
     const user = JSON.parse(localStorage.getItem("user"));
 
     const items = cart
@@ -41,14 +46,16 @@ ${items}
 
 ⚽ Thank you for shopping with Eleven Store!`;
 
-    // ✅ CORRECT NUMBER FORMAT
     const phone = "919008739786";
 
-    // ✅ MOBILE SAFE LINK
     const url = `https://api.whatsapp.com/send?phone=${phone}&text=${encodeURIComponent(msg)}`;
 
-    // ✅ WORKS ON BOTH MOBILE + LAPTOP
-    window.location.href = url;
+    // ✅ MOBILE + DESKTOP SAFE
+    try {
+      window.location.href = url;
+    } catch (err) {
+      window.open(url, "_blank");
+    }
   };
 
   return (
@@ -75,7 +82,6 @@ ${items}
             Your Cart 🛒
           </h1>
 
-          {/* ✅ FIXED → goes to products */}
           <Link
             to="/products"
             style={{

@@ -19,17 +19,22 @@ function Products() {
     { id: 3, name: "Premium Brown Tee", price: 999, image: tshirt3 },
   ];
 
-  const slogans = [
-    "Eat. Sleep. Football. Repeat.",
-  ];
+  const slogans = ["Eat. Sleep. Football. Repeat."];
+
+  // ✅ GLOBAL LOGOUT FIX
+  const handleLogout = () => {
+    localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem("user");
+    window.location.href = "/signup";
+  };
 
   return (
     <div className="page">
 
-      {/* 🔥 TOAST */}
+      {/* TOAST */}
       {toast && <div className="toast">{toast}</div>}
 
-      {/* 🔥 HEADER */}
+      {/* HEADER */}
       <div
         style={{
           display: "flex",
@@ -40,24 +45,24 @@ function Products() {
       >
         <h1 className="logo">ELEVEN STORE ⚽</h1>
 
-        <div style={{ display: "flex", gap: "12px", color: "#c3ed09ff" }}>
+        <div style={{ display: "flex", gap: "12px" }}>
           <button className="btn-primary" onClick={() => navigate("/cart")}>
             Cart 🛒 ({cartCount})
           </button>
 
-          <button className="btn-dark" onClick={() => navigate("/login")}>
+          <button className="btn-dark" onClick={handleLogout}>
             Logout
           </button>
         </div>
       </div>
 
-      {/* 🔥 HERO */}
+      {/* HERO */}
       <div className="hero">
         <h2>STREET. FOOTBALL. CULTURE.</h2>
         <p>From the Youth !!! For the Youth !!!</p>
       </div>
 
-      {/* 🔥 SLOGANS */}
+      {/* SLOGANS */}
       <div className="slogans">
         {slogans.map((s, i) => (
           <div key={i} className="slogan-card">
@@ -66,7 +71,7 @@ function Products() {
         ))}
       </div>
 
-      {/* 🔥 PRODUCTS */}
+      {/* PRODUCTS */}
       <h2 style={{ marginBottom: "15px" }}>🔥 Featured Drops</h2>
 
       <div className="products">
@@ -77,7 +82,7 @@ function Products() {
         ))}
       </div>
 
-      {/* 🔥 FOOTER */}
+      {/* FOOTER */}
       <div className="footer">
         <h2>ELEVEN STORE ⚽</h2>
 
