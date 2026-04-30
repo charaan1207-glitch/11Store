@@ -7,27 +7,32 @@ import Signup from "./pages/Signup.jsx";
 import Cart from "./pages/Cart.jsx";
 import Admin from "./pages/Admin.jsx";
 
-import { CartProvider } from "./context/CartContext"; // ✅ MUST be used
+import { CartProvider } from "./context/CartContext";
 
-// 🔐 Protect routes
+// 🔐 Protect routes (UPDATED)
 const PrivateRoute = ({ children }) => {
   const isLoggedIn = localStorage.getItem("isLoggedIn");
-  return isLoggedIn ? children : <Navigate to="/login" />;
+
+  // 👉 CHANGE HERE (login → signup)
+  return isLoggedIn ? children : <Navigate to="/signup" />;
 };
 
 function App() {
   return (
-    <CartProvider> {/* 🔥 THIS LINE FIXES WARNING */}
+    <CartProvider>
       <Router>
         <Routes>
 
-          {/* PUBLIC */}
+          {/* ✅ DEFAULT → SIGNUP */}
+          <Route path="/" element={<Navigate to="/signup" />} />
+
+          {/* ✅ PUBLIC ROUTES */}
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
 
-          {/* PROTECTED */}
+          {/* ✅ PROTECTED ROUTES */}
           <Route
-            path="/"
+            path="/products"
             element={
               <PrivateRoute>
                 <Products />
@@ -53,8 +58,8 @@ function App() {
             }
           />
 
-          {/* DEFAULT */}
-          <Route path="*" element={<Navigate to="/" />} />
+          {/* ✅ FALLBACK */}
+          <Route path="*" element={<Navigate to="/signup" />} />
 
         </Routes>
       </Router>

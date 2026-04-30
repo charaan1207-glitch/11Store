@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import "./Auth.css";
 
 function Login() {
@@ -18,7 +18,7 @@ function Login() {
         try {
             setLoading(true);
 
-            const res = await fetch("https://eleven-backend-d53u.onrender.com/api/auth/login", {
+            const res = await fetch("https://elevenstore-backens.onrender.com/api/auth/login", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -29,15 +29,14 @@ function Login() {
             const data = await res.json();
 
             if (!res.ok) {
-                alert(data.msg || "Login failed");
-                setLoading(false);
+                alert(data.msg || "Login failed ❌");
                 return;
             }
 
             // ✅ STORE LOGIN STATUS
             localStorage.setItem("isLoggedIn", "true");
 
-            // 🔥 STORE USER EMAIL (IMPORTANT FOR WHATSAPP)
+            // ✅ STORE USER INFO
             localStorage.setItem(
                 "user",
                 JSON.stringify({
@@ -47,11 +46,12 @@ function Login() {
 
             alert("Login successful ✅");
 
-            navigate("/");
+            // 🔥 REDIRECT TO PRODUCTS (IMPORTANT FIX)
+            navigate("/products");
 
         } catch (error) {
-            console.error(error);
-            alert("Server error, try again later");
+            console.error("Login error:", error);
+            alert("Server not responding ❌");
         } finally {
             setLoading(false);
         }
@@ -60,8 +60,14 @@ function Login() {
     return (
         <div className="auth-container">
             <div className="auth-card">
-                <h1 style={{ marginBottom: "10px", fontSize: "24px", color: "#111" }}>Eleven Store</h1>
-                <h2 style={{ marginBottom: "20px", color: "#666" }}>Login</h2>
+
+                <h1 style={{ marginBottom: "10px", fontSize: "24px", color: "#111" }}>
+                    Eleven Store
+                </h1>
+
+                <h2 style={{ marginBottom: "20px", color: "#666" }}>
+                    Login
+                </h2>
 
                 <input
                     type="email"
@@ -80,6 +86,26 @@ function Login() {
                 <button onClick={handleLogin} disabled={loading}>
                     {loading ? "Logging in..." : "Login"}
                 </button>
+
+                <p style={{
+                    marginTop: "15px",
+                    fontSize: "14px",
+                    color: "#555",
+                    textAlign: "center"
+                }}>
+                    Don’t have an account?{" "}
+                    <Link
+                        to="/signup"
+                        style={{
+                            color: "#0ea5e9",
+                            fontWeight: "600",
+                            textDecoration: "none"
+                        }}
+                    >
+                        Signup here
+                    </Link>
+                </p>
+
             </div>
         </div>
     );
