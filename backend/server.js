@@ -6,11 +6,10 @@ const cors = require("cors");
 
 const app = express();
 
-/* 🔥 CORS FIX (IMPORTANT FOR FRONTEND CONNECTION) */
+/* 🔥 CORS (frontend connection fix) */
 app.use(cors({
-  origin: "*",   // allow all (later you can restrict)
+  origin: "*",
   methods: ["GET", "POST", "PUT", "DELETE"],
-  credentials: false
 }));
 
 /* 🔥 BODY PARSER */
@@ -26,13 +25,10 @@ app.get("/", (req, res) => {
   res.send("🚀 Eleven Store Backend Running");
 });
 
-/* 🔥 DATABASE CONNECTION */
+/* 🔥 DATABASE CONNECTION (FIXED) */
 const connectDB = async () => {
   try {
-    await mongoose.connect(process.env.MONGO_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true
-    });
+    await mongoose.connect(process.env.MONGO_URI); // ✅ ONLY THIS
     console.log("MongoDB Connected ✅");
   } catch (error) {
     console.error("MongoDB Connection Error ❌", error.message);
@@ -48,7 +44,7 @@ app.use((err, req, res, next) => {
   res.status(500).json({ msg: "Server Error" });
 });
 
-/* 🔥 START SERVER */
+/* 🔥 SERVER START */
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
