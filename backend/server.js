@@ -6,9 +6,9 @@ const cors = require("cors");
 
 const app = express();
 
-/* 🔥 SIMPLE + STRONG CORS (NO CONFLICTS) */
+/* 🔥 CORS */
 app.use(cors({
-  origin: "*",   // allow all for now
+  origin: "*",
   methods: ["GET", "POST", "PUT", "DELETE"],
 }));
 
@@ -25,13 +25,22 @@ app.use("/api/auth", require("./routes/auth"));
 app.use("/api/products", require("./routes/products"));
 app.use("/api/orders", require("./routes/orders"));
 
-/* 🔥 DATABASE CONNECTION */
+/* 🔥 DATABASE CONNECTION (WITH DEBUG) */
 const connectDB = async () => {
   try {
+    console.log("🔄 Connecting to MongoDB...");
+
+    if (!process.env.MONGO_URI) {
+      console.error("❌ MONGO_URI is NOT defined");
+      process.exit(1);
+    }
+
     await mongoose.connect(process.env.MONGO_URI);
-    console.log("MongoDB Connected ✅");
+
+    console.log("✅ MongoDB Connected Successfully");
+
   } catch (error) {
-    console.error("MongoDB Connection Error ❌", error.message);
+    console.error("❌ MongoDB Connection Error:", error.message);
     process.exit(1);
   }
 };
@@ -40,11 +49,11 @@ connectDB();
 
 /* 🔥 ERROR HANDLER */
 app.use((err, req, res, next) => {
-  console.error("SERVER ERROR:", err);
+  console.error("🔥 SERVER ERROR:", err);
   res.status(500).json({ msg: "Server Error" });
 });
 
-/* 🔥 START SERVER (IMPORTANT FIX) */
+/* 🔥 SERVER START */
 const PORT = process.env.PORT || 10000;
 
 app.listen(PORT, "0.0.0.0", () => {
