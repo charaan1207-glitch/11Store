@@ -7,10 +7,10 @@ export default function Cart() {
   const { cart, clearCart } = useCart();
   const navigate = useNavigate();
 
-  // 🔐 Protect page
+  // 🔐 Protect page (FIXED → signup instead of login)
   useEffect(() => {
     const isLoggedIn = localStorage.getItem("isLoggedIn");
-    if (!isLoggedIn) navigate("/login");
+    if (!isLoggedIn) navigate("/signup");
   }, [navigate]);
 
   // 💰 Total
@@ -19,14 +19,14 @@ export default function Cart() {
     0
   );
 
-  // 📲 WhatsApp Checkout
+  // 📲 WhatsApp Checkout (MOBILE + DESKTOP FIX)
   const checkout = () => {
     const user = JSON.parse(localStorage.getItem("user"));
 
     const items = cart
       .map(
         (item) =>
-          `• ${item.name}\n  Qty: ${item.quantity}\n  ₹${item.price} x ${item.quantity} = ₹${item.price * item.quantity}`
+          `• ${item.name}\nQty: ${item.quantity}\n₹${item.price} x ${item.quantity} = ₹${item.price * item.quantity}`
       )
       .join("\n\n");
 
@@ -41,13 +41,14 @@ ${items}
 
 ⚽ Thank you for shopping with Eleven Store!`;
 
-    const numbers = ["9008739786", "6379988537", "8088266082"];
+    // ✅ CORRECT NUMBER FORMAT
+    const phone = "919008739786";
 
-    numbers.forEach((num, i) => {
-      setTimeout(() => {
-        window.open(`https://wa.me/${num}?text=${encodeURIComponent(msg)}`, "_blank");
-      }, i * 800);
-    });
+    // ✅ MOBILE SAFE LINK
+    const url = `https://api.whatsapp.com/send?phone=${phone}&text=${encodeURIComponent(msg)}`;
+
+    // ✅ WORKS ON BOTH MOBILE + LAPTOP
+    window.location.href = url;
   };
 
   return (
@@ -74,8 +75,9 @@ ${items}
             Your Cart 🛒
           </h1>
 
+          {/* ✅ FIXED → goes to products */}
           <Link
-            to="/"
+            to="/products"
             style={{
               display: "flex",
               alignItems: "center",
@@ -119,7 +121,6 @@ ${items}
                   boxShadow: "0 6px 18px rgba(0,0,0,0.1)",
                 }}
               >
-                {/* IMAGE */}
                 <img
                   src={item.image}
                   alt={item.name}
@@ -133,7 +134,6 @@ ${items}
                   }}
                 />
 
-                {/* DETAILS */}
                 <div style={{ flex: 1 }}>
                   <h3 style={{ margin: 0 }}>{item.name}</h3>
 
@@ -146,7 +146,6 @@ ${items}
                   </p>
                 </div>
 
-                {/* TOTAL */}
                 <h3 style={{ color: "#0ea5e9" }}>
                   ₹{item.price * item.quantity}
                 </h3>
@@ -166,8 +165,10 @@ ${items}
               <h2 style={{ marginBottom: "5px" }}>
                 Final Total: ₹{total.toLocaleString("en-IN")}
               </h2>
+
               <p style={{ marginBottom: "15px", color: "#666" }}>
-                Total Items Purchased: {cart.reduce((sum, item) => sum + item.quantity, 0)}
+                Total Items Purchased:{" "}
+                {cart.reduce((sum, item) => sum + item.quantity, 0)}
               </p>
 
               <div style={{ display: "flex", gap: "15px" }}>

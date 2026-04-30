@@ -9,28 +9,35 @@ import Admin from "./pages/Admin.jsx";
 
 import { CartProvider } from "./context/CartContext";
 
-// 🔐 Protect routes (UPDATED)
+// 🔐 Protect routes
 const PrivateRoute = ({ children }) => {
   const isLoggedIn = localStorage.getItem("isLoggedIn");
-
-  // 👉 CHANGE HERE (login → signup)
   return isLoggedIn ? children : <Navigate to="/signup" />;
 };
 
 function App() {
+  const isLoggedIn = localStorage.getItem("isLoggedIn");
+
   return (
     <CartProvider>
       <Router>
         <Routes>
 
-          {/* ✅ DEFAULT → SIGNUP */}
+          {/* ✅ DEFAULT */}
           <Route path="/" element={<Navigate to="/signup" />} />
 
-          {/* ✅ PUBLIC ROUTES */}
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
+          {/* ✅ PUBLIC (SMART REDIRECT) */}
+          <Route 
+            path="/login" 
+            element={isLoggedIn ? <Navigate to="/products" /> : <Login />} 
+          />
 
-          {/* ✅ PROTECTED ROUTES */}
+          <Route 
+            path="/signup" 
+            element={isLoggedIn ? <Navigate to="/products" /> : <Signup />} 
+          />
+
+          {/* ✅ PROTECTED */}
           <Route
             path="/products"
             element={
