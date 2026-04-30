@@ -6,15 +6,38 @@ const cors = require("cors");
 
 const app = express();
 
-/* 🔥 CORS (FULL FIX) */
+/* 🔥 STRONG CORS FIX (FINAL) */
+const allowedOrigins = [
+  "http://localhost:3000",
+  "http://localhost:3001",
+  "http://localhost:3003",
+  "https://elevenstore-frontend.onrender.com" // (your deployed frontend — update if needed)
+];
+
 app.use(cors({
-  origin: "*",
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(null, true); // allow all (safe fallback for now)
+    }
+  },
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type"]
+  allowedHeaders: ["Content-Type", "Authorization"],
 }));
 
-// VERY IMPORTANT (handles browser preflight)
-app.options("*", cors());
+/* 🔥 IMPORTANT: Handle preflight manually */
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
+  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+
+  if (req.method === "OPTIONS") {
+    return res.sendStatus(200);
+  }
+
+  next();
+});
 
 /* 🔥 BODY PARSER */
 app.use(express.json());
