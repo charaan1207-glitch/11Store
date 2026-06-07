@@ -23,9 +23,8 @@ function Products() {
 
   // ✅ GLOBAL LOGOUT FIX
   const handleLogout = () => {
-    localStorage.removeItem("isLoggedIn");
-    localStorage.removeItem("user");
-    window.location.href = "/signup";
+    localStorage.clear();
+    window.location.href = "/";
   };
 
   return (
