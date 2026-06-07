@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import "./App.css";
 
+import LandingPage from "./pages/LandingPage.jsx";
 import Products from "./pages/Products.jsx";
 import Login from "./pages/Login.jsx";
 import Signup from "./pages/Signup.jsx";
@@ -24,7 +25,7 @@ function App() {
         <Routes>
 
           {/* ✅ DEFAULT */}
-          <Route path="/" element={<Navigate to="/signup" />} />
+          <Route path="/" element={<LandingPage />} />
 
           {/* ✅ PUBLIC (SMART REDIRECT) */}
           <Route 
@@ -66,7 +67,7 @@ function App() {
           />
 
           {/* ✅ FALLBACK */}
-          <Route path="*" element={<Navigate to="/signup" />} />
+          <Route path="*" element={<Navigate to="/" />} />
 
         </Routes>
       </Router>
