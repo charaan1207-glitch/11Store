@@ -1,4 +1,4 @@
 # 11Store
-From the Youth! For the Youth!
+Full Stack Web application by Antigravity (IDE)
 Link :
 https://one1store.onrender.com/
